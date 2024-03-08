@@ -6,4 +6,8 @@ public final class FloatNode implements Node {
     public FloatNode(float f) {
         this.f = f;
     }
+
+    public float getF() {
+        return f;
+    }
 }

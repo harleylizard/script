@@ -10,11 +10,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
 
 public final class Script {
     private static final Grammar GRAMMAR = createGrammar();
 
-    private Script() {
+    private final ScriptInternals internals;
+
+    private Script(ScriptInternals internals) {
+        this.internals = internals;
+    }
+
+    public ScriptInternals getInternals() {
+        return internals;
     }
 
     public static Script parse(InputStream inputStream) throws IOException {
@@ -23,7 +32,7 @@ public final class Script {
 
             GRAMMAR.check(parsed);
 
-            return new Script();
+            return new Script(new ScriptInternals(List.of(), Map.of(), Map.of()));
         }
     }
 

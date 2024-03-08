@@ -13,6 +13,10 @@ public final class ScriptLoader {
         this.map = map;
     }
 
+    public boolean has(String path) {
+        return map.containsKey(path);
+    }
+
     public Script getScript(String path) {
         return map.get(path);
     }
