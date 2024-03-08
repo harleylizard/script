@@ -15,7 +15,7 @@ public final class Traverser<T> {
     }
 
     public void next() {
-        i = Math.min(i + 1, list.size());
+        i = Math.min(i + 1, list.size() - 1);
     }
 
     public void previous() {
@@ -23,7 +23,7 @@ public final class Traverser<T> {
     }
 
     public boolean hasNext() {
-        return i < list.size();
+        return i < list.size() - 1;
     }
 
     public Traverser<T> copy() {

@@ -19,7 +19,7 @@ public final class ScriptTest {
             }
         };
 
-        var scriptLoader = ScriptLoader.of(resourceLoader, List.of("test.script", "test2.script"));
+        var scriptLoader = ScriptLoader.of(resourceLoader, List.of("test.script", "bone.script"));
 
         var internals = scriptLoader.getScript("test.script").getInternals();
         if (internals.hasData(scriptLoader, "bone")) {
@@ -28,7 +28,6 @@ public final class ScriptTest {
             var query = new Query();
             var head = query.add("head", data);
             var body = query.add("body", data);
-
         }
     }
 }

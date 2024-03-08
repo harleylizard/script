@@ -32,11 +32,9 @@ public final class Script {
             var parsed = Lexer.parse(reader);
 
             GRAMMAR.tryCheck(parsed);
-            var tree = GRAMMAR.toTree(parsed);
+            var internals = TreeParser.toTree(parsed);
 
-            var imports = tree.get("imports").<ListTree<String>>unsafeCast();
-
-            return new Script(new ScriptInternals(imports.getList(), Map.of(), Map.of()));
+            return new Script(internals);
         }
     }
 

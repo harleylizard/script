@@ -1,0 +1,4 @@
+data bone {
+    float pitch
+    float yaw
+}
