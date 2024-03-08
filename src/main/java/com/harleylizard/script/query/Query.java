@@ -6,15 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Query {
+    private final Map<String, DataEntry.Instance> map = new HashMap<>();
 
-    private Query() {}
-
-    public static final class Builder {
-        private final Map<String, DataEntry.Instance> map = new HashMap<>();
-
-        public Builder add(String name, DataEntry dataEntry) {
-            map.put(name, dataEntry.create());
-            return this;
-        }
+    public DataEntry.Instance add(String name, DataEntry entry) {
+        var instance = entry.create();
+        map.put(name, instance);
+        return instance;
     }
 }

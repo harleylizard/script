@@ -1,9 +1,13 @@
 package com.harleylizard.script.node;
 
 public final class IdentifierNode implements Node {
-    private final String string;
+    private final String identifier;
 
-    public IdentifierNode(String string) {
-        this.string = string;
+    public IdentifierNode(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 }

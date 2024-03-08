@@ -1,12 +1,16 @@
 package com.harleylizard.script;
 
+import com.harleylizard.script.enums.Keyword;
+import com.harleylizard.script.node.EnumNode;
+import com.harleylizard.script.node.IdentifierNode;
 import com.harleylizard.script.node.Node;
 import com.harleylizard.script.rule.Rule;
+import com.harleylizard.script.tree.ListTree;
+import com.harleylizard.script.tree.MapTree;
+import com.harleylizard.script.tree.ObjectTree;
+import com.harleylizard.script.tree.Tree;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class Grammar {
     private final Map<String, Rule> map;
@@ -15,18 +19,35 @@ public final class Grammar {
         this.map = map;
     }
 
-    public void check(List<Node> list) {
+    public void tryCheck(List<Node> list) {
+        map.get("root").check(this, Traverser.of(list));
+    }
+
+    public MapTree toTree(List<Node> list) {
         var traverser = Traverser.of(list);
 
-        map.get("root").check(this, traverser);
+        var map = new HashMap<String, Tree>();
+        var imports = new ArrayList<String>();
+        while (traverser.hasNext()) {
+            var node = traverser.current();
+            if (node instanceof EnumNode<?> enumNode) {
+                var j = enumNode.get();
+                if (j == Keyword.IMPORT) {
+                    traverser.next();
+                    imports.add(((IdentifierNode) traverser.current()).getIdentifier());
+                }
+            }
+            traverser.next();
+        }
+        map.put("imports", new ListTree<>(Collections.unmodifiableList(imports)));
+        return new MapTree(Collections.unmodifiableMap(map));
     }
 
     public static final class Builder {
         private final Map<String, Rule> map = new HashMap<>();
 
-        public Builder add(String name, Rule rule) {
+        public void add(String name, Rule rule) {
             map.put(name, rule);
-            return this;
         }
 
         public Grammar build() {

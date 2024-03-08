@@ -5,6 +5,7 @@ import com.harleylizard.script.enums.Delimiter;
 import com.harleylizard.script.enums.Keyword;
 import com.harleylizard.script.enums.Operator;
 import com.harleylizard.script.rule.Rule;
+import com.harleylizard.script.tree.ListTree;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,9 +31,12 @@ public final class Script {
         try (var reader = new BufferedReader(new InputStreamReader(inputStream))) {
             var parsed = Lexer.parse(reader);
 
-            GRAMMAR.check(parsed);
+            GRAMMAR.tryCheck(parsed);
+            var tree = GRAMMAR.toTree(parsed);
 
-            return new Script(new ScriptInternals(List.of(), Map.of(), Map.of()));
+            var imports = tree.get("imports").<ListTree<String>>unsafeCast();
+
+            return new Script(new ScriptInternals(imports.getList(), Map.of(), Map.of()));
         }
     }
 

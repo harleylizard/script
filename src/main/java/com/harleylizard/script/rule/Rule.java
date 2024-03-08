@@ -6,7 +6,7 @@ import com.harleylizard.script.node.Node;
 
 import java.util.List;
 
-public sealed interface Rule permits AnyOfRule, BuilderRule, EitherRule, EnumRule, IdentifierRule, ManyRule, OptionalRule, SequenceRule {
+public sealed interface Rule permits AnyOfRule, EitherRule, EnumRule, IdentifierRule, ManyRule, OptionalRule, SequenceRule {
 
     void check(Grammar grammar, Traverser<Node> traverser);
 
