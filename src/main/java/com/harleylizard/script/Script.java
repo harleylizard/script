@@ -5,14 +5,11 @@ import com.harleylizard.script.enums.Delimiter;
 import com.harleylizard.script.enums.Keyword;
 import com.harleylizard.script.enums.Operator;
 import com.harleylizard.script.rule.Rule;
-import com.harleylizard.script.tree.ListTree;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Map;
 
 public final class Script {
     private static final Grammar GRAMMAR = createGrammar();
@@ -32,7 +29,7 @@ public final class Script {
             var parsed = Lexer.parse(reader);
 
             GRAMMAR.tryCheck(parsed);
-            var internals = TreeParser.toTree(parsed);
+            var internals = InternalsParser.create(parsed);
 
             return new Script(internals);
         }

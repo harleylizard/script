@@ -18,13 +18,20 @@ public final class ScriptInternals {
     }
 
     public boolean hasData(ScriptLoader loader, String name) {
+        var twice = false;
         for (var anImport : imports) {
             if (!loader.has(anImport)) {
                 throw new RuntimeException("Unable to find script for %s".formatted(anImport));
             }
-            return loader.getScript(anImport).getInternals().hasData(loader, name);
+            if (loader.getScript(anImport).getInternals().hasData(loader, name)) {
+                twice = true;
+                break;
+            }
         }
-        return data.containsKey(name);
+        if (twice && data.containsKey(name)) {
+            throw new RuntimeException("Duplicate data(s) of \"%s\"".formatted(name));
+        }
+        return twice || data.containsKey(name);
     }
 
     public DataEntry getData(ScriptLoader loader, String name) {

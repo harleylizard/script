@@ -28,6 +28,13 @@ public final class ScriptTest {
             var query = new Query();
             var head = query.add("head", data);
             var body = query.add("body", data);
+
+            if (internals.hasFunction("animate")) {
+                var function = internals.getFunction("animate");
+                function.execute(query);
+            }
+
+            System.err.println(head.getFloat("pitch"));
         }
     }
 }

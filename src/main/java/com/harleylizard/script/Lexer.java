@@ -9,7 +9,6 @@ import com.harleylizard.script.node.Node;
 
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,7 +23,7 @@ public final class Lexer {
         while (scanner.hasNext()) {
             list.add(createNode(scanner.next()));
         }
-        return list.isEmpty() ? List.of() : Collections.unmodifiableList(list);
+        return Util.toImmutable(list);
     }
 
     private static Node createNode(String s) {

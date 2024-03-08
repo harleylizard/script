@@ -20,6 +20,10 @@ public final class DataEntry implements Entry {
         return fields.get(name);
     }
 
+    private DataType getDataType(String name) {
+        return fields.get(name);
+    }
+
     public Instance create() {
         return new Instance(this);
     }
@@ -39,7 +43,7 @@ public final class DataEntry implements Entry {
         public void setDouble(String name, double d) {
             var dataType = entry.orThrow(name);
             if (dataType != DataType.DOUBLE) {
-                throw wrongDataType(name);
+                throw wrongDataType(name, DataType.DOUBLE);
             }
             map.put(name, new DoubleNode(d));
         }
@@ -47,7 +51,7 @@ public final class DataEntry implements Entry {
         public void setFloat(String name, float f) {
             var dataType = entry.orThrow(name);
             if (dataType != DataType.FLOAT) {
-                throw wrongDataType(name);
+                throw wrongDataType(name, DataType.FLOAT);
             }
             map.put(name, new FloatNode(f));
         }
@@ -55,7 +59,7 @@ public final class DataEntry implements Entry {
         public void setInt(String name, int i) {
             var dataType = entry.orThrow(name);
             if (dataType != DataType.INT) {
-                throw wrongDataType(name);
+                throw wrongDataType(name, DataType.INT);
             }
             map.put(name, new FloatNode(i));
         }
@@ -63,7 +67,7 @@ public final class DataEntry implements Entry {
         public void setByte(String name, byte b) {
             var dataType = entry.orThrow(name);
             if (dataType != DataType.BYTE) {
-                throw wrongDataType(name);
+                throw wrongDataType(name, DataType.BYTE);
             }
             map.put(name, new FloatNode(b));
         }
@@ -73,7 +77,7 @@ public final class DataEntry implements Entry {
             if (node instanceof DoubleNode doubleNode) {
                 return doubleNode.getD();
             }
-            throw wrongDataType(name);
+            throw wrongDataType(name, DataType.DOUBLE);
         }
 
         public float getFloat(String name) {
@@ -81,7 +85,7 @@ public final class DataEntry implements Entry {
             if (node instanceof FloatNode floatNode) {
                 return floatNode.getF();
             }
-            throw wrongDataType(name);
+            throw wrongDataType(name, DataType.FLOAT);
         }
 
         public int getInt(String name) {
@@ -89,7 +93,7 @@ public final class DataEntry implements Entry {
             if (node instanceof IntNode intNode) {
                 return intNode.getI();
             }
-            throw wrongDataType(name);
+            throw wrongDataType(name, DataType.INT);
         }
 
         public byte getByte(String name) {
@@ -97,11 +101,11 @@ public final class DataEntry implements Entry {
             if (node instanceof ByteNode byteNode) {
                 return byteNode.getB();
             }
-            throw wrongDataType(name);
+            throw wrongDataType(name, DataType.BYTE);
         }
 
-        private static RuntimeException wrongDataType(String name) {
-            return new RuntimeException("Wrong DataType for %s".formatted(name));
+        private RuntimeException wrongDataType(String name, DataType type) {
+            return new RuntimeException("Wrong DataType for %s. Expected %s, got %s".formatted(name, entry.getDataType(name).name(), type.name()));
         }
     }
 }

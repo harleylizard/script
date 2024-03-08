@@ -13,4 +13,8 @@ public final class Query {
         map.put(name, instance);
         return instance;
     }
+
+    public DataEntry.Instance get(String name) {
+        return map.get(name);
+    }
 }
