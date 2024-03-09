@@ -35,6 +35,10 @@ public final class InternalsParser {
                 if (j == Keyword.DATA) {
                     traverser.next();
                     var name = getIdentifier(traverser.current());
+                    if (data.containsKey(name)) {
+                        throw new RuntimeException("Duplicate data(s) of \"%s\"".formatted(name));
+                    }
+
                     var fields = new HashMap<String, DataType>();
 
                     traverser.next();
@@ -51,7 +55,7 @@ public final class InternalsParser {
                         traverser.next();
                     }
                     var dataEntry = DataEntry.of(Collections.unmodifiableMap(fields));
-                    data.put(name, dataEntry);
+                    data.putIfAbsent(name, dataEntry);
                 }
                 if (j == Keyword.FUNCTION) {
                     traverser.next();

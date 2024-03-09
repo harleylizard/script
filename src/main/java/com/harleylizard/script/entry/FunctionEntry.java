@@ -2,6 +2,8 @@ package com.harleylizard.script.entry;
 
 import com.harleylizard.script.Traverser;
 import com.harleylizard.script.query.Query;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntStack;
 
 import java.util.List;
 
@@ -14,6 +16,9 @@ public final class FunctionEntry implements Entry {
 
     public void execute(Query query) {
         var traverser = Traverser.of(list);
+
+        IntStack numbers = new IntArrayList();
+        IntStack operators = new IntArrayList();
 
         while (traverser.hasNext()) {
             var current = traverser.current();

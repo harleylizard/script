@@ -35,6 +35,7 @@ public final class ScriptTest {
             }
 
             System.err.println(head.getFloat("pitch"));
+            System.err.println(head.getFloat("yaw"));
         }
     }
 }

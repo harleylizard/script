@@ -1,5 +1,7 @@
 import bone.script
 
 function animate {
-    head.pitch = 2
+    head.pitch = 0
+    head.yaw = 1.0
 }
+

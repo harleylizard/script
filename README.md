@@ -35,9 +35,12 @@ data vector {
 import path/to/my_data.script
 
 function my_function {
-
     position.x = 0
     position.y = 0
     position.z = 0
 }
 ```
+
+## Future Stuff (Not Implemented Yet)
+* Operators (1 + 1, 1 - 1, 1 / 1, 1 * 1, 1 & 1)
+* References (1 * myObject.value)
